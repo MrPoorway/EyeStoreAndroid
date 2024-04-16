@@ -4,11 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.ContextMenu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -27,34 +24,39 @@ import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
 
-    private ListView glassesListView;
-    private GlassesAdapter glassesAdapter;
-    private Cart cart;
+    public Cart cart;
+    private CartAdapter cartAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        cart = Cart.getInstance();
+        cart = new Cart();
 
-        glassesListView = findViewById(R.id.glassesListView);
+        ListView glassesListView = findViewById(R.id.glassesListView);
 
         RetrofitClient retrofitClient = RetrofitClient.getInstance();
         GlassesService glassesApi = retrofitClient.getGlassesService();
 
         Call<List<Glasses>> glassesCall = glassesApi.getAllGlasses();
 
+        Button buttonCart = findViewById(R.id.buttonCart);
+        buttonCart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, CartActivity.class);
+                startActivity(intent);
+            }
+        });
+
         glassesCall.enqueue(new Callback<List<Glasses>>() {
             @Override
             public void onResponse(Call<List<Glasses>> call, Response<List<Glasses>> response) {
                 if (response.isSuccessful()) {
                     List<Glasses> glassesList = response.body();
-                    glassesAdapter = new GlassesAdapter(MainActivity.this, glassesList, cart);
+                    GlassesAdapter glassesAdapter = new GlassesAdapter(MainActivity.this, glassesList, cart);
                     glassesListView.setAdapter(glassesAdapter);
-
-                    // Register context menu for long click on list items
-                    registerForContextMenu(glassesListView);
                 }
             }
 
@@ -64,29 +66,5 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this, "Failed to fetch glasses", Toast.LENGTH_SHORT).show();
             }
         });
-    }
-
-    @Override
-    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-        super.onCreateContextMenu(menu, v, menuInfo);
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_context, menu);
-    }
-
-    @Override
-    public boolean onContextItemSelected(MenuItem item) {
-        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-        Glasses glasses = glassesAdapter.getItem(info.position);
-
-        int itemId = item.getItemId();
-        if (itemId == R.id.action_add_to_cart) {
-            cart.addItem(glasses);
-            Toast.makeText(this, "Added to cart", Toast.LENGTH_SHORT).show();
-        } else if (itemId == R.id.action_view_cart) {
-            Intent intent = new Intent(this, CartActivity.class);
-            startActivity(intent);
-        }
-
-        return super.onContextItemSelected(item);
     }
 }

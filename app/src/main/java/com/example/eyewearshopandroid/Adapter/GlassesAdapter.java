@@ -1,6 +1,7 @@
 package com.example.eyewearshopandroid.Adapter;
-
 import android.content.Context;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,10 +11,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-
-import com.example.eyewearshopandroid.MainActivity;
 import com.example.eyewearshopandroid.Model.Cart;
 import com.example.eyewearshopandroid.Model.Glasses;
 import com.example.eyewearshopandroid.R;
@@ -25,7 +22,7 @@ public class GlassesAdapter extends ArrayAdapter<Glasses> {
 
     private Cart cart;
 
-    public GlassesAdapter(@NonNull Context context, List<Glasses> glassesList, Cart cart) {
+    public GlassesAdapter(Context context, List<Glasses> glassesList, Cart cart) {
         super(context, 0, glassesList);
         this.cart = cart;
     }
