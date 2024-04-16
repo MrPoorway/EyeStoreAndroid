@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_margin="16dp"
+    >
+
+    <EditText
+        android:id="@+id/ud_GlassesId"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Glasses Id" />
+    <EditText
+        android:id="@+id/ud_GlassesName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Glasses Name"/>
+
+    <EditText
+        android:id="@+id/ud_GlassesType"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Glasses Type"/>
+
+    <EditText
+        android:id="@+id/ud_GlassesPrice"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Glasses Price" />
+
+    <EditText
+        android:id="@+id/ud_GlassesQuantity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Glasses quantity" />
+
+    <EditText
+        android:id="@+id/ud_ImageUri"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Image uri" />
+
+
+</LinearLayout>
