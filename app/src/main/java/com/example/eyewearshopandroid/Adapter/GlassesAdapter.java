@@ -5,13 +5,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.example.eyewearshopandroid.Entities.Glasses;
+import com.example.eyewearshopandroid.MainActivity;
+import com.example.eyewearshopandroid.Model.Cart;
+import com.example.eyewearshopandroid.Model.Glasses;
 import com.example.eyewearshopandroid.R;
 import com.squareup.picasso.Picasso;
 
@@ -19,8 +23,11 @@ import java.util.List;
 
 public class GlassesAdapter extends ArrayAdapter<Glasses> {
 
-    public GlassesAdapter(@NonNull Context context, List<Glasses> glassesList) {
+    private Cart cart;
+
+    public GlassesAdapter(@NonNull Context context, List<Glasses> glassesList, Cart cart) {
         super(context, 0, glassesList);
+        this.cart = cart;
     }
 
     @NonNull
@@ -38,6 +45,7 @@ public class GlassesAdapter extends ArrayAdapter<Glasses> {
         TextView quantityTextView = listItemView.findViewById(R.id.textViewQuantity);
         TextView priceTextView = listItemView.findViewById(R.id.textViewPrice);
         ImageView imageView = listItemView.findViewById(R.id.imageUri);
+        Button addToCartButton = listItemView.findViewById(R.id.addToCartButton);
 
         glassesNameTextView.setText(currentGlasses.getName());
         typeTextView.setText("Type: " + currentGlasses.getType());
@@ -48,6 +56,14 @@ public class GlassesAdapter extends ArrayAdapter<Glasses> {
         if (imageUrl != null) {
             Picasso.get().load(imageUrl).into(imageView);
         }
+
+        addToCartButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cart.addItem(currentGlasses);
+                Toast.makeText(getContext(), "Added to Cart", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         return listItemView;
     }

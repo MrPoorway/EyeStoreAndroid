@@ -1,4 +1,4 @@
-package com.example.eyewearshopandroid.Entities;
+package com.example.eyewearshopandroid.Model;
 
 public class Glasses {
     private int id;

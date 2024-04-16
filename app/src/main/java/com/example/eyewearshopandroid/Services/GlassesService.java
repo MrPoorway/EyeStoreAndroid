@@ -1,6 +1,6 @@
 package com.example.eyewearshopandroid.Services;
 
-import com.example.eyewearshopandroid.Entities.Glasses;
+import com.example.eyewearshopandroid.Model.Glasses;
 
 import java.util.List;
 
